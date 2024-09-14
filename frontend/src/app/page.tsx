@@ -33,8 +33,7 @@ export default function Home() {
         </Link>
       </main>
 
-      {/* Absolute Position the Ferns */}
-      <div className="absolute top-[400px] right-[50px] z-[10] -rotate-45">
+      <div className="absolute top-[400px] right-[50px] -rotate-45 z-[1]">
         <Image
           src={"/assets/tropical-ferns-png-7.png"}
           width={328}
@@ -43,7 +42,7 @@ export default function Home() {
         />
       </div>
 
-      <section className="flex justify-center items-center w-full h-[512px] bg-periwrinkle">
+      <section className="flex justify-center items-center w-full h-[512px] bg-periwrinkle z-[2] relative">
         <div className="flex justify-between w-full max-w-[1200px] items-center">
           <div className="flex-1 flex justify-center">
             <h2 className="text-[44px] text-center">
@@ -56,7 +55,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="w-full h-[5156px]"></section>
+      <section className="w-full h-[5156px] z-[2] relative"></section>
 
       <section className="flex justify-center items-center w-full h-[512px] bg-purple">
         <div className="flex justify-between w-full max-w-[1200px] items-center">
