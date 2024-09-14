@@ -12,7 +12,7 @@ export default function Home() {
         alt={""}
         className="absolute z-[-1]"
       />
-      <main className="flex flex-col justify-start h-[717px] pt-[100px]">
+      <main className="flex flex-col justify-start h-[797px] pt-[100px]">
         <div className="flex justify-around gap-2">
           <div className="flex flex-col gap-6 ml-[112px] mt-[152px] w-full">
             <h1 className="font-semibold text-6xl">Magic Mirror</h1>
@@ -42,7 +42,7 @@ export default function Home() {
         />
       </div>
 
-      <section className="flex justify-center items-center w-full h-[512px] bg-periwrinkle z-[2] relative">
+      <section className="flex justify-center items-center w-full h-[512px] bg-cloud z-[2] relative">
         <div className="flex justify-between w-full max-w-[1200px] items-center">
           <div className="flex-1 flex justify-center">
             <h2 className="text-[44px] text-center">
@@ -57,13 +57,13 @@ export default function Home() {
 
       <section className="w-full h-[5156px] z-[2] relative"></section>
 
-      <section className="flex justify-center items-center w-full h-[512px] bg-purple">
+      <section className="flex justify-center items-center w-full h-[512px] bg-ocean">
         <div className="flex justify-between w-full max-w-[1200px] items-center">
           <div className="flex-1 flex justify-center">
             <div className="w-[238px] h-[238px] rounded-full bg-tertiary"></div>
           </div>
           <div className="flex-1 flex justify-center">
-            <h2 className="text-[44px] text-center">
+            <h2 className="text-[44px] text-center text-columbia">
               smth smth AI magic will make it so that you’ve never looked better
               never had more style woah!!
             </h2>
