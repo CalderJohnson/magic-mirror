@@ -1,6 +1,11 @@
 """Fetch product data from the shopify API"""
 import requests
-from . import cfg
+from . import config
+
+REQUEST_HEADERS = {
+    "X-Shopify-Storefront-Access-Token": config.SHOPIFY_API_KEY,
+    "Content-Type": "application/json"
+}
 
 class ProductLoader:
     @staticmethod

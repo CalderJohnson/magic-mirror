@@ -1,8 +1,8 @@
 """Cohere client registration."""
 import cohere
 
-from . import cfg
+from . import config
 
 cohere_client = cohere.Client(
-    cfg.COHERE_API_KEY,
+    config.COHERE_API_KEY,
 )

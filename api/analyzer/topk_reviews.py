@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
 from .clients import cohere_client
-from . import cfg
+from . import config
 
 class ReviewExtractor:
     """Module for extracting relevant reviews using Cohere reranking and embedding similarity"""
@@ -14,14 +14,14 @@ class ReviewExtractor:
         # Embed reviews
         review_embeddings = cohere_client.embed(
             texts=[review["content"] for review in reviews],
-            model=cfg.EMBEDDING_MODEL,
+            model=config.EMBEDDING_MODEL,
             input_type="search_document",
         ).embeddings
 
         # Embed prompt
         query_embedding = cohere_client.embed(
             texts=[query],
-            model=cfg.EMBEDDING_MODEL,
+            model=config.EMBEDDING_MODEL,
             input_type="search_query",
         ).embeddings
 
@@ -31,7 +31,7 @@ class ReviewExtractor:
 
         # Get top N reviews
         topn_indices = np.argsort(similarity_scores)[::-1]
-        topn_reviews = [reviews[i] for i in topn_indices][:cfg.N_VALUE]
+        topn_reviews = [reviews[i] for i in topn_indices][:config.N_VALUE]
 
         return topn_reviews
 
@@ -42,8 +42,8 @@ class ReviewExtractor:
         response = cohere_client.rerank(
             query=query,
             documents=[review["content"] for review in relevant_reviews],
-            top_n=cfg.K_VALUE,
-            model=cfg.RERANKER_MODEL,
+            top_n=config.K_VALUE,
+            model=config.RERANKER_MODEL,
         )
     
         topk_reviews = [relevant_reviews[result.index] for result in response.results]
@@ -64,7 +64,7 @@ class ReviewExtractor:
             "average_rating": sum([review["rating"] for review in reviews]) / len(reviews),
         }
 
-        augmented_rerank_prompt = cfg.RERANK_PROMPT % (product_title, *review_stats.values())
+        augmented_rerank_prompt = config.RERANK_PROMPT % (product_title, *review_stats.values())
 
         # 2 stage review extraction
         topn_reviews = ReviewExtractor._get_relevant_reviews(reviews, augmented_rerank_prompt)

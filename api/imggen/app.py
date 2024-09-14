@@ -266,6 +266,7 @@ class ImageGenerator:
         output = start_tryon(people, garment_image, garment_description, True, True, 30, 10)
         output[1].show()
         output[0].show()
+        #TODO: SAVE FILE AND RETURN PATH
         return
 
 ImageGenerator.tryon("./temp/user.jpg", "./temp/garment.jpg", "pink bikini")

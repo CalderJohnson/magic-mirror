@@ -6,6 +6,7 @@ load_dotenv()
 
 # Secrets
 COHERE_API_KEY = os.getenv("COHERE_API_KEY")
+SHOPIFY_API_KEY = os.getenv("SHOPIFY_API_KEY")
 
 # Locators
 SHOPIFY_API = "" # Shopify API URL
