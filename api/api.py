@@ -19,6 +19,6 @@ app.add_middleware(
 )
 
 @app.get("/summary/{id}")
-async def get_product_info(id: str):
+async def get_product_info(id: str, store: str):
     """Get product analysis."""
-    return ProductAnalyzer.get_product_information(id)
+    return ProductAnalyzer.get_product_information(id, store)

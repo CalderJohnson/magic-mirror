@@ -9,20 +9,29 @@ REQUEST_HEADERS = {
 
 class ProductLoader:
     @staticmethod
-    def get_product(id: str):
+    def get_product(id: str, store: str):
         """GraphQL query grabs product info"""
-        # PLACEHOLDER FOR TESTING
-        response = {
-            "product": {
-                "title": "Cheetah Print Sweater",
-                "description": "Stay cozy and stylish with this bold cheetah print sweater. Featuring a soft knit fabric, this sweater is perfect for casual wear or layering during colder seasons. The eye-catching animal print adds a trendy flair to any outfit.",
-                "tags": ["sweater", "cheetah print", "knitwear", "fall fashion", "casual wear"],
+        print(config.SHOPIFY_API_KEY)
+        query = """
+        {
+            product(id: "gid://shopify/Product/%s") {
+                title
+                description
+                tags
             }
         }
-        return response
+        """ % id
+
+        response = requests.post(
+            config.SHOPIFY_API_URL % store,
+            json={'query': query},
+            headers=REQUEST_HEADERS,
+        ).json()
+
+        return dict(response)["data"]
 
     @staticmethod
-    def get_reviews(id: str):
+    def get_reviews(id: str, store: str):
         """REST API call to get reviews"""
         # PLACEHOLDER FOR TESTING
         response = {
@@ -150,4 +159,3 @@ class ProductLoader:
             ]
         }
         return response
-

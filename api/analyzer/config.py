@@ -9,7 +9,7 @@ COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 SHOPIFY_API_KEY = os.getenv("SHOPIFY_API_KEY")
 
 # Locators
-SHOPIFY_API = "" # Shopify API URL
+SHOPIFY_API_URL = "https://%s.myshopify.com/api/2024-07/graphql.json"
 
 # Models
 EMBEDDING_MODEL = "embed-english-v3.0"
