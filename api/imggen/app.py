@@ -255,13 +255,17 @@ for ex_human in human_list_path:
     ex_dict['composite'] = None
     human_ex_list.append(ex_dict)
 
-##default human
+class ImageGenerator:
+    """Interface for image generation"""
+    @staticmethod
+    def tryon(human_image_path, garment_image_path, garment_description):
+        """Try on a garment on a human image"""
+        human_image = Image.open(human_image_path)
+        garment_image = Image.open(garment_image_path)
+        people = {'background': human_image}
+        output = start_tryon(people, garment_image, garment_description, True, True, 30, 10)
+        output[1].show()
+        output[0].show()
+        return
 
-person = Image.open('hennytest.png')
-garment = Image.open('il_570xN.5126905210_eosc.png')
-people = {'background' : person}
-
-output = start_tryon(people, garment, "leopard-print sweater", True, True, 30, 10)
-print(output)
-output[0].show()
-output[1].show()
+ImageGenerator.tryon("./temp/user.jpg", "./temp/garment.jpg", "pink bikini")
