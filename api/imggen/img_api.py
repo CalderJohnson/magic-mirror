@@ -1,3 +1,5 @@
+"""API for the virtual try-on service."""
+import uuid
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
@@ -19,7 +21,7 @@ app.add_middleware(
 )
 
 @app.get("/tryon/{id}")
-async def get_tryon_image(user_image: UploadFile = File(...), garment_image: UploadFile = File(...), garment_description: str = ""):
+async def get_tryon_image(id: str, user_image: UploadFile = File(...), garment_description: str = ""):
     """Get a virtual try on of a product using an uploaded image."""
     if not file.content_type.startswith('image/'):
         return JSONResponse(status_code=400, content={"message": "Uploaded file is not an image."})
@@ -31,10 +33,11 @@ async def get_tryon_image(user_image: UploadFile = File(...), garment_image: Upl
         shutil.copyfileobj(user_image.file, user_buffer)
         shutil.copyfileobj(garment_image.file, garment_buffer)
     
-    # TODO: Implement the try-on logic here
+    # Generate try-on image
+    result_path = ImageGenerator.generate_tryon(user_filepath, garment_filepath, garment_description)
 
     # Delete the files after processing
     os.remove(user_filepath)
     os.remove(garment_filepath)
 
-    return FileResponse("temp/.jpg", media_type="image/jpg", filename="tryon.jpg")
+    return FileResponse(result_path, media_type="image/jpg", filename="tryon.jpg")
