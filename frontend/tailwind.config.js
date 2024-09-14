@@ -19,6 +19,9 @@ module.exports = {
         ocean: "#7E958F",
         columbia: "#D4E0F0"
       },
+      backgroundImage: {
+        'wet': "url('/asset/Component9.png')",
+      }
     },
   },
   plugins: [],
