@@ -13,6 +13,8 @@ module.exports = {
       colors: {
         secondary: "#B9B8B8",
         tertiary: "#A5A5A5",
+        periwrinkle: "#A7B5FE",
+        purple: "#BB92F9"
       },
     },
   },
