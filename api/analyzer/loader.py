@@ -1,17 +1,11 @@
 """Fetch product data from the shopify API"""
 import requests
-from . import config
-
-REQUEST_HEADERS = {
-    "X-Shopify-Storefront-Access-Token": config.SHOPIFY_API_KEY,
-    "Content-Type": "application/json"
-}
+from .. import config
 
 class ProductLoader:
     @staticmethod
     def get_product(id: str, store: str):
         """GraphQL query grabs product info"""
-        print(config.SHOPIFY_API_KEY)
         query = """
         {
             product(id: "gid://shopify/Product/%s") {
@@ -25,10 +19,10 @@ class ProductLoader:
         response = requests.post(
             config.SHOPIFY_API_URL % store,
             json={'query': query},
-            headers=REQUEST_HEADERS,
+            headers=config.REQUEST_HEADERS,
         ).json()
 
-        return dict(response)["data"]
+        return response["data"]
 
     @staticmethod
     def get_reviews(id: str, store: str):

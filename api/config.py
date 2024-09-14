@@ -11,6 +11,12 @@ SHOPIFY_API_KEY = os.getenv("SHOPIFY_API_KEY")
 # Locators
 SHOPIFY_API_URL = "https://%s.myshopify.com/api/2024-07/graphql.json"
 
+# Headers for Shopify API
+REQUEST_HEADERS = {
+    "X-Shopify-Storefront-Access-Token": SHOPIFY_API_KEY,
+    "Content-Type": "application/json"
+}
+
 # Models
 EMBEDDING_MODEL = "embed-english-v3.0"
 RERANKER_MODEL  = "rerank-english-v3.0"
