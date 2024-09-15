@@ -9,8 +9,8 @@ from fastapi.responses import JSONResponse, FileResponse
 import cloudinary
 from cloudinary.utils import cloudinary_url
 
-from .app import ImageGenerator
-from .. import config
+from app import ImageGenerator
+import config
 
 app = FastAPI()
 
@@ -71,14 +71,11 @@ def get_garment_data(id: str, store: str):
 
 def upload_image(image_path: str):
     """Upload image to Cloudinary."""
-    url = config.CLOUDINARY_URL
-    payload = {
-        "file": image_path,
-        "upload_preset": config.CLOUDINARY_UPLOAD_PRESET,
-    }
-
-    response = requests.post(url, files=payload)
-    return response.json()["secure_url"]
+    upload_result = cloudinary.uploader.upload(
+        image_path,
+        public_id="result",
+    )
+    return upload_result["secure_url"]
 
 class TryonRequest(BaseModel):
     id: str
