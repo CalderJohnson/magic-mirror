@@ -1,6 +1,6 @@
 """Fetch product data from the shopify API"""
 import requests
-from .. import config
+import config
 
 class ProductLoader:
     @staticmethod

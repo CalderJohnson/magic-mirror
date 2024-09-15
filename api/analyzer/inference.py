@@ -1,6 +1,6 @@
 """Module for generating product summary using Cohere R1"""
 from .clients import cohere_client
-from .. import config
+import config
 
 class ProductSummarizer:
     """Module for generating product summary using Cohere R1"""

@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
 from .clients import cohere_client
-from .. import config
+import config
 
 class ReviewExtractor:
     """Module for extracting relevant reviews using Cohere reranking and embedding similarity"""
