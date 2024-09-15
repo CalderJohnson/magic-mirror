@@ -82,7 +82,7 @@ class TryonRequest(BaseModel):
     store: str
     user_image_url: str
 
-@app.post("/tryon/{id}")
+@app.post("/tryon/")
 async def get_tryon_image(tryon_request: TryonRequest):
     """Get a virtual try on of a product using an uploaded image."""
     id = tryon_request.id
