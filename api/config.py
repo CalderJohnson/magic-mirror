@@ -29,7 +29,6 @@ LANGUAGE_MODEL  = "command-r-plus-08-2024"
 SYSTEM_PROMPT = """
     You are a helpful AI assistant. Generate an unbiased summary of the product using the given information. You are not selling the product, just giving information on it.
     Be dynamic and informative, mentioning the good as well as potentially negative aspects of the product. Mention the information included in the provided relevant product reviews.
-    Break up the message using newlines to make it easier to read.
 """
 
 # Prompt for product information generation

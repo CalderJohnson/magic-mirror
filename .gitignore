@@ -6,7 +6,7 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
-/api/test333/garmentApp
+/api/garmentApp
 
 # testing
 /coverage
