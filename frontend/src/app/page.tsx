@@ -1,21 +1,33 @@
 import Image from "next/image";
 import Link from "next/link";
 import cloud from "../../public/assets/vector.svg";
-import magic_mirror from "../../public/assets/magic_mirror.png"
-import magic_mirror_girl from "../../public/assets/mirror_magic.png"
-import leaf from "../../public/assets/tropical-ferns-png-7.png"
-import drip from "../../public/assets/Component9.png"
-import mirror from "../../public/assets/m_m.png"
-import shop1 from "../../public/assets/shop1.png"
-import shop2 from "../../public/assets/shop2.png"
-import shop3 from "../../public/assets/shop3.png"
-import shop4 from "../../public/assets/shop4.png"
-import shop5 from "../../public/assets/shop5.png"
-import elipse from "../../public/assets/Ellipse22.png"
-import wave from "../../public/assets/wave.png"
+import magic_mirror from "../../public/assets/magic_mirror.png";
+import magic_mirror_girl from "../../public/assets/mirror_magic.png";
+import leaf from "../../public/assets/tropical-ferns-png-7.png";
+import drip from "../../public/assets/Component9.png";
+import mirror from "../../public/assets/m_m.png";
+import shop1 from "../../public/assets/shop1.png";
+import shop2 from "../../public/assets/shop2.png";
+import shop3 from "../../public/assets/shop3.png";
+import shop4 from "../../public/assets/shop4.png";
+import shop5 from "../../public/assets/shop5.png";
+import elipse from "../../public/assets/ellipse.png";
+import wave from "../../public/assets/wave.png";
+import shopify_logo from "../../public/assets/shopify.png";
+import cohere_logo from "../../public/assets/cohere.png";
+import example_image_1 from "../../public/assets/example_image_1.png";
+import example_image_2 from "../../public/assets/example_image_2.png";
+import { Modern_Antiqua } from 'next/font/google';
+
+const modernAntiqua = Modern_Antiqua({
+  subsets: ['latin'],
+  weight: ['400'], // Modern Antiqua only supports 400 (normal weight)
+  display: 'swap',
+});
+
 export default function Home() {
   return (
-    <div className="w-full overflow-hidden">
+    <div className={`${modernAntiqua.className} w-full overflow-hidden`} >
       <section className="w-full h-[1037px] bg-wet">
         <div className="flex p-6 justify-between w-full">
           <div className="flex">
@@ -26,7 +38,7 @@ export default function Home() {
             </div>
             
           </div>
-          <Link href={"/info"} className="px-[32px] py-[10px] w-[289px] h-[70px] text-white font-bold rounded-md bg-[#706545]  text-[32px]">Try it</Link>  
+          <Link href={"/info"} className="px-[32px] py-[10px] w-[289px] h-[70px] text-white font-bold rounded-md bg-[#76CBCC]  text-[32px]">Try it</Link>  
         </div>
        
         
@@ -60,20 +72,18 @@ export default function Home() {
       <section className="w-full flex flex-col gap-32 h-[3097px]">
         <div className="flex gap-8 mx-8 justify-around items-center mt-32">
           <Image src={shop1} width={400} height={450} alt={""} className=""/>
-          <p className="text-[32px]">do you have this bad problem
-          where you online shop and then when you get the item it looks bad on you?</p>
+          <p className="text-[32px]">Do you online shop, but find it hard to discover quality products that fit?</p>
         </div>
         <div className="flex gap-8 mx-8 justify-around items-center mt-32">
-          <p className="text-[32px]">smth smth let our fairy godmothers take care of you with this newfangled thing called the magic mirror oooooh magic</p>
+          <p className="text-[32px]">Magic Mirror lets you see clothes on yourself before you buy them! Our platform also gives you a detailed rundown of the product to help you make informed purchasing decisions!</p>
           <Image src={shop2} width={400} height={450} alt={""} className=""/>
         </div>
         <div className="flex gap-8 mx-8 justify-around items-center mt-32">
           <Image src={shop3} width={400} height={450} alt={""} className=""/>
-          <p className="text-[32px]">it’s as easy as abracadabra idk it tells you how to do it here and whatnot dude</p>
+          <p className="text-[32px]">It's as easy as uploading a picture of yourself, and the Magic Mirror will do the rest!</p>
         </div>
         <div className="flex gap-8 mx-8 justify-around items-center mt-32">
-          <p className="text-[32px]">woah now you look amazing and
-          super cool huzzah</p>
+          <p className="text-[32px]">Now you look amazing and save time and money shopping!</p>
           <Image src={shop4} width={400} height={450} alt={""} className=""/>
         </div>
         <div className="flex justify-center items-center">
@@ -82,17 +92,33 @@ export default function Home() {
       </section>
       <section className="w-full h-[495px] bg-[#FDD9BC] flex justify-center items-center gap-20">
         <Image src={elipse} width={300} height={300} alt={""} className=""/>
-        <p className="text-gray-600 text-[32px]">smth smth AI magic will make it
-so that you’ve never looked better
-never had more style woah!!</p>
+        <p className="text-gray-600 text-[32px]">AI magic will make it so that you’ve never had more style!</p>
       </section>
 
       <section className="w-full h-[1000px] flex flex-col">
         <div className="flex flex-col flex-1">
-          <h4 className="text-5xl self-center flex-1">Example Image Here</h4>
+          <h4 className="text-5xl self-center flex-1 mt-4">Example</h4>
+          <div className="w-full flex justify-center items-center my-8">
+            <Image
+              src={example_image_1}
+              width={600}
+              height={600}
+              alt={"Example Image 1"}
+              className="m-4"
+            />
+            <Image
+              src={example_image_2}
+              width={600}
+              height={600}
+              alt={"Example Image 2"}
+              className="m-4"
+            />
+          </div>
           <h4 className="text-5xl justify-self-end">Proudly powered by ...</h4>
         </div>
         <div className="w-full flex justify-center items-center bg-[#D9D9D9] h-[250px]">
+          <Image src={shopify_logo} width={200} height={200} alt={"Shopify logo"} className="m-4"/>
+          <Image src={cohere_logo} width={200} height={200} alt={"Cohere logo"} className="m-4"/>
         </div>
       </section>
       <section className="w-full h-[1000px] flex flex-col justify-end relative">
