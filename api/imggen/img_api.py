@@ -79,7 +79,7 @@ def upload_image(image_path: str):
     response = requests.post(url, files=payload)
     return response.json()["secure_url"]
 
-@app.get("/tryon/{id}")
+@app.post("/tryon/{id}")
 async def get_tryon_image(id: str, store: str, user_image_url: str):
     """Get a virtual try on of a product using an uploaded image."""
     

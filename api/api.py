@@ -13,13 +13,13 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@app.get("/summary/{id}")
+@app.post("/summary/{id}")
 async def get_product_info(id: str, store: str):
     """Get product analysis."""
     return JSONResponse(status_code=200, content={"description": ProductAnalyzer.get_product_information(id, store)})
