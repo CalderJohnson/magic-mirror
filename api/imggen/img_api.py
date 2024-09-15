@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse, FileResponse
 import cloudinary
+import cloudinary.uploader
 from cloudinary.utils import cloudinary_url
 
 from app import ImageGenerator
@@ -21,7 +22,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -41,7 +42,7 @@ def upload_image(image_path: str):
         image_path,
         public_id="tryon",
     )
-    return response.json()["secure_url"]
+    return upload_result["secure_url"]
 
 def get_garment_data(id: str, store: str):
     """GraphQL query grabs product description and image"""
@@ -50,7 +51,6 @@ def get_garment_data(id: str, store: str):
     {
         product(id: "gid://shopify/Product/%s") {
             title
-            description
             featuredImage {
                 url
             }
@@ -64,17 +64,14 @@ def get_garment_data(id: str, store: str):
         headers=config.REQUEST_HEADERS,
     ).json()
 
-    garment_description = response["data"]["product"]["title"] + " " + response["data"]["product"]["description"]
+    garment_description = response["data"]["product"]["title"]
     garment_image_url = response["data"]["product"]["featuredImage"]["url"]
 
     return garment_description, garment_image_url
 
 def upload_image(image_path: str):
     """Upload image to Cloudinary."""
-    upload_result = cloudinary.uploader.upload(
-        image_path,
-        public_id="result",
-    )
+    upload_result = cloudinary.uploader.upload(image_path)
     return upload_result["secure_url"]
 
 class TryonRequest(BaseModel):
@@ -87,7 +84,7 @@ async def get_tryon_image(tryon_request: TryonRequest):
     """Get a virtual try on of a product using an uploaded image."""
     id = tryon_request.id
     store = tryon_request.store
-    user_image_url = tryon_request.user
+    user_image_url = tryon_request.user_image_url
     
     # Get garment and user data
     garment_description, garment_image_url = get_garment_data(id, store)
@@ -97,18 +94,19 @@ async def get_tryon_image(tryon_request: TryonRequest):
         return JSONResponse(status_code=400, content={"message": "Failed to fetch images.", "img_url": None})
     
     # Save the files to temporily to disk
-    user_filepath = "./temp/" + str(uuid.uuid4())
-    garment_filepath = "./temp/" + str(uuid.uuid4())
-    with open(user_filepath, "wb") as user_buffer, open(garment_filepath, "wb") as garment_buffer:
+    filepath = ".\\temp\\"
+    user_filepath = str(uuid.uuid4()) + ".jpg"
+    garment_filepath = str(uuid.uuid4()) + ".jpg"
+    with open(filepath+user_filepath, "wb") as user_buffer, open(filepath+garment_filepath, "wb") as garment_buffer:
         user_buffer.write(user_image.content)
         garment_buffer.write(garment_image.content)
     
     # Generate try-on image
-    result_path = ImageGenerator.generate_tryon(user_filepath, garment_filepath, garment_description)
+    result_path = ImageGenerator.tryon(user_filepath, garment_filepath, garment_description)
 
     # Delete the files after processing
-    os.remove(user_filepath)
-    os.remove(garment_filepath)
+    os.remove(filepath+user_filepath)
+    os.remove(filepath+garment_filepath)
 
     # Upload result image to Cloudinary
     result_url = upload_image(result_path)

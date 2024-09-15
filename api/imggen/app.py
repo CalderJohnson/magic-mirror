@@ -266,8 +266,5 @@ class ImageGenerator:
         people = {'background': human_image}
         output = start_tryon(people, garment_image, garment_description, True, True, 30, 10)
         output[0].save(filepath+"save.png")
-        path = os.path.abspath(filepath)
-        print(path)
-        return
-
-ImageGenerator.tryon("user.jpg", "garment.jpg", "pink bikini")
+        path = os.path.abspath(filepath) + "\\save.png"
+        return path
