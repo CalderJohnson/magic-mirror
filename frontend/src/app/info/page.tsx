@@ -1,21 +1,26 @@
 'use client';
 
-import { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 import Image from "next/image";
 import { CldUploadWidget } from "next-cloudinary";
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import Head from "next/head";
+
+import lace from "/public/assets/vector.png";
+import crown from "/public/assets/crown.png";
+import logo from "/public/assets/m_m.png";
 
 export default function MagicMirror() {
   const [userImageUrl, setUserImageUrl] = useState<string | null>(null);
   const [shopifyLink, setShopifyLink] = useState<string>("");
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // Function to handle the Cloudinary Upload widget result
   const handleUploadSuccess = (result: any) => {
-    setUserImageUrl(result.info.secure_url); // Set the Cloudinary image URL
+    setUserImageUrl(result.info.secure_url);
     console.log('Cloudinary upload result:', result);
-    setIsUploading(false); // Stop the loading state
+    setIsUploading(false);
   };
 
   const handleUpload = async () => {
@@ -27,10 +32,9 @@ export default function MagicMirror() {
     const url = new URL(shopifyLink);
     const shopifyStore = url.hostname.split('.')[0];
     const productHandle = shopifyLink.split('/products/')[1];
-
+    
     setIsUploading(true);
 
-    // Send Shopify link and Cloudinary URL to your backend
     const summary_payload = {
       id: productHandle,
       store: shopifyStore,
@@ -43,6 +47,7 @@ export default function MagicMirror() {
     }
 
     try {
+      setIsLoading(true);
       const summary_response = await fetch('http://localhost:8080/summary/', {
         method: 'POST',
         headers: {
@@ -63,11 +68,11 @@ export default function MagicMirror() {
         const summary_result = await summary_response.json();
         const tryon_result = await tryon_response.json();
         alert('Image and link uploaded successfully!');
-        alert(JSON.stringify(summary_result) + " " + JSON.stringify(tryon_result))
-        if (typeof window !== "undefined")
-        localStorage.setItem('summary_result', JSON.stringify(summary_result)); // Store the results in local storage
-        localStorage.setItem("tryon_result", JSON.stringify(tryon_result));
-        router.push('/result'); // Redirect to the result page
+        if (typeof window !== "undefined") {
+          localStorage.setItem('summary_result', JSON.stringify(summary_result));
+          localStorage.setItem("tryon_result", JSON.stringify(tryon_result));
+        }
+        router.push('/result');
       } else {
         alert('Failed to upload data.');
         console.error('Server error:', summary_response.statusText);
@@ -77,65 +82,153 @@ export default function MagicMirror() {
       alert('Error uploading data.' + error + "test");
     } finally {
       setIsUploading(false);
+      setIsLoading(false);
     }
   };
 
-  return (
-    <div className="w-full h-full bg-gray-200">
-      <div className="w-full bg-gray-600 h-[100px] flex items-center justify-center text-white">
-        <h1 className="italic text-3xl">MagicMirror</h1>
-      </div>
-      <main className="flex flex-col items-center justify-center p-8">
-        <h2 className="text-4xl font-serif my-8">What do you wish to see...</h2>
-        <div className="flex flex-col items-center space-y-6 w-full">
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-300 flex items-center justify-center">
+        <Head>
+          <title>Loading - Fairy Godmother Outfit Fitting</title>
+          <meta name="description" content="Loading page for fairy godmother outfit fitting" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-          {/* Cloudinary Upload Widget */}
-          <CldUploadWidget
-            uploadPreset="next_preset" // Replace with your Cloudinary upload preset
-            onSuccess={handleUploadSuccess}
-            options={{ sources: ['local', 'url', 'camera'], cropping: false }}
-          >
-            {({ open }) => (
-              <div
-                className={`w-full h-[300px] border-2 ${userImageUrl ? "border-blue-500" : "border-gray-400"} border-dashed rounded-lg flex justify-center items-center cursor-pointer bg-gray-100`}
-                onClick={() => open()}
-              >
-                <div className="text-center">
+        <main className="w-[90vw] h-[50vh] relative bg-gradient-to-b from-[#B4E7F8] to-[#F8D0CB] rounded-lg shadow-lg overflow-hidden">
+          {/* Dripping effect */}
+          <div className="absolute top-0 left-0 right-0 h-[5vh] bg-[#B4E7F8]">
+            <div className="flex justify-between">
+              {[...Array(10)].map((_, i) => (
+                <div 
+                  key={i} 
+                  className="w-[8vw] h-[3vh] bg-[#B4E7F8] rounded-b-full"
+                  style={{transform: `translateY(${2 + Math.random() * 2}vh)`}}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="w-[10vw] h-[10vw] rounded-full border-4 border-pink-300 border-t-pink-500 animate-spin" />
+          </div>
+
+          <div className="absolute bottom-[5vh] left-0 right-0 text-center">
+            <p className="text-[2.5vw] text-gray-700 font-serif">
+              The Fairy godmothers are fitting your outfit
+            </p>
+            <p className="text-[2vw] text-gray-600 font-serif mt-2">
+              please be patient
+            </p>
+          </div>
+        </main>
+      </div>
+    )
+  }
+
+  function handleShopifyLinkChange(event: ChangeEvent<HTMLInputElement>): void {
+    setShopifyLink(event.target.value);
+  }
+
+  return (
+    <div className="w-[100vw] h-[100vh] bg-gradient-to-b from-[#FCD3B6] via-[#EFD0CE] to-[#EBB0AA] overflow-hidden">
+      {/* Lace Banner */}
+      <div className="w-[100vw] h-[15vh] relative overflow-hidden">
+        <Image 
+          src={lace}
+          alt="Lace Trim Banner"
+          fill
+          style={{objectFit: "cover"}}
+        />
+        {/* Logo */}
+        <div className="absolute top-[2vh] left-[2vw] w-[10vw] h-[10vh]">
+          <Image 
+            src={logo}
+            alt="MagicMirror Logo"
+            fill
+            style={{objectFit: "contain"}}
+          />
+        </div>
+      </div>
+      
+      {/* Main Content */}
+      <main className="flex justify-between items-center h-[85vh] w-[100vw] px-[5vw] mt-[-20x]">
+        {/* Left Section with Image */}
+        <div className="relative w-[50vw] h-[70vh] flex flex-col justify-center items-center gap-12">
+          <h2 className="text-[4vw] font-serif mb-[3vh] mt-[-20px]">
+            What do you wish to see...
+          </h2>
+          <div className="relative w-[25vw] h-[55vh] mt-[-20px]"> {/* Adjusted for skinnier, taller shape */}
+            <CldUploadWidget
+              uploadPreset="next_preset"
+              onSuccess={handleUploadSuccess}
+              options={{ sources: ['local', 'url', 'camera'], cropping: false }}
+            >
+              {({ open }) => (
+                <div
+                  className="w-full h-full border-2 border-dashed overflow-hidden cursor-pointer bg-gray-100 flex justify-center items-center"
+                  style={{
+                    borderRadius: '70% 70% 0 0', // More pronounced arch
+                    position: 'relative',
+                  }}
+                  onClick={() => open()}
+                >
                   {userImageUrl ? (
-                    <Image src={userImageUrl} alt="User Image" width={200} height={200} className="rounded-lg" />
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      borderRadius: '70% 70% 0 0',
+                      overflow: 'hidden'
+                    }}>
+                      <Image src={userImageUrl} alt="User Image" fill style={{objectFit: "cover"}} />
+                    </div>
                   ) : (
-                    <p className="text-gray-500">Click to upload an image</p>
+                    <p className="text-[1.5vw] text-gray-500 text-center px-2">Click to upload an image</p>
                   )}
                 </div>
-              </div>
-            )}
-          </CldUploadWidget>
+              )}
+            </CldUploadWidget>
 
-          {/* Shopify Link Input */}
-          <div className="w-full">
-            <label htmlFor="shopifyLink" className="block text-lg text-gray-700">
+            {/* Crown Decoration */}
+            <div className="absolute top-[-8%] left-[70%] transform -translate-x-1/2 w-[30vw] h-[10vh]">
+              <Image 
+                src={crown}
+                width={300}
+                height={100}
+                alt="Crown Decoration"
+                style={{objectFit: "contain"}}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Right Section with URL Input and Button */}
+        <div className="w-[40vw] h-[70vh] flex flex-col justify-center items-center">
+          <div className="mb-[3vh] w-full">
+            <label htmlFor="shopifyLink" className="block text-[2vw] text-gray-700">
               Shopify Product Link:
             </label>
             <input
               type="url"
               id="shopifyLink"
               value={shopifyLink}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setShopifyLink(e.target.value)}
-              className="w-full p-2 border border-gray-400 rounded-md"
+              onChange={handleShopifyLinkChange}
+              className="w-full p-[2vh] border border-gray-400 rounded-md text-[1.5vw]"
               placeholder="https://your-shopify-product-link.com"
               required
             />
           </div>
+          <button
+            className="py-[2vh] px-[5vw] bg-gray-500 text-white font-semibold rounded-md text-[2vw]"
+            onClick={handleUpload}
+            disabled={isUploading}
+          >
+            {isUploading ? "Uploading..." : "Confirm!"}
+          </button>
         </div>
-
-        {/* Button */}
-        <button
-          className="mt-8 py-2 px-6 bg-gray-500 text-white font-semibold rounded-md"
-          onClick={handleUpload}
-          disabled={isUploading}
-        >
-          {isUploading ? "Uploading..." : "Dress up time :)"}
-        </button>
       </main>
     </div>
   );
