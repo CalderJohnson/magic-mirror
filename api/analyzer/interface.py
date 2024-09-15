@@ -9,6 +9,6 @@ class ProductAnalyzer:
         """Get product information"""
         product_data = ProductLoader.get_product(id, store)
         product_reviews = ProductLoader.get_reviews(id, store)
-        topk_reviews = ReviewExtractor.get_topk_reviews(product_reviews["reviews"], product_data["product"]["title"])
-        product_summary = ProductSummarizer.generate_summary(product_data["product"], topk_reviews)
+        topk_reviews = ReviewExtractor.get_topk_reviews(product_reviews["reviews"], product_data["productByHandle"]["title"])
+        product_summary = ProductSummarizer.generate_summary(product_data["productByHandle"], topk_reviews)
         return product_summary

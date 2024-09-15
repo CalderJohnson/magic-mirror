@@ -46,10 +46,9 @@ def upload_image(image_path: str):
 
 def get_garment_data(id: str, store: str):
     """GraphQL query grabs product description and image"""
-    print(config.SHOPIFY_API_KEY)
     query = """
     {
-        product(id: "gid://shopify/Product/%s") {
+        productByHandle(handle: "%s") {
             title
             featuredImage {
                 url
@@ -64,8 +63,8 @@ def get_garment_data(id: str, store: str):
         headers=config.REQUEST_HEADERS,
     ).json()
 
-    garment_description = response["data"]["product"]["title"]
-    garment_image_url = response["data"]["product"]["featuredImage"]["url"]
+    garment_description = response["data"]["productByHandle"]["title"]
+    garment_image_url = response["data"]["productByHandle"]["featuredImage"]["url"]
 
     return garment_description, garment_image_url
 

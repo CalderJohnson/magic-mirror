@@ -2,7 +2,7 @@
 const url = 'http://localhost:8000/tryon/'
 
 let testParams = {
-    id: "9606473908515",
+    id: "daring-cheetah-print-sweater",
     store: "b6ee04-80",
     user_image_url: "https://res.cloudinary.com/djwt4zrhz/image/upload/v1726361855/hvriletqz4mcslikpcej.jpg"
 }

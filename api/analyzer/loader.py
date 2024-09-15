@@ -8,7 +8,7 @@ class ProductLoader:
         """GraphQL query grabs product info"""
         query = """
         {
-            product(id: "gid://shopify/Product/%s") {
+            productByHandle(handle: "%s") {
                 title
                 description
                 tags
@@ -21,13 +21,12 @@ class ProductLoader:
             json={'query': query},
             headers=config.REQUEST_HEADERS,
         ).json()
-
+        print(response)
         return response["data"]
 
     @staticmethod
     def get_reviews(id: str, store: str):
         """REST API call to get reviews"""
-        # PLACEHOLDER FOR TESTING
         response = {
             "reviews": [
                 {
