@@ -1,5 +1,6 @@
 """API endpoints for product analysis."""
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from analyzer.interface import ProductAnalyzer
@@ -21,4 +22,4 @@ app.add_middleware(
 @app.get("/summary/{id}")
 async def get_product_info(id: str, store: str):
     """Get product analysis."""
-    return ProductAnalyzer.get_product_information(id, store)
+    return JSONResponse(status_code=200, content={"description": ProductAnalyzer.get_product_information(id, store)})

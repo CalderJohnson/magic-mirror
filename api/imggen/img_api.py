@@ -98,7 +98,7 @@ async def get_tryon_image(id: str, store: str, user_image_url: str):
         garment_buffer.write(garment_image.content)
     
     # Generate try-on image
-    # result_path = ImageGenerator.generate_tryon(user_filepath, garment_filepath, garment_description)
+    result_path = ImageGenerator.generate_tryon(user_filepath, garment_filepath, garment_description)
 
     # Delete the files after processing
     os.remove(user_filepath)
