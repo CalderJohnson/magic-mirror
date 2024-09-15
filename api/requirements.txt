@@ -3,3 +3,4 @@ scikit-learn
 cohere
 fastapi
 cloudinary
+pydantic

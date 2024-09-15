@@ -4,6 +4,7 @@ import uuid
 import requests
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from fastapi.responses import JSONResponse, FileResponse
 import cloudinary
 from cloudinary.utils import cloudinary_url
@@ -79,9 +80,17 @@ def upload_image(image_path: str):
     response = requests.post(url, files=payload)
     return response.json()["secure_url"]
 
+class TryonRequest(BaseModel):
+    id: str
+    store: str
+    user_image_url: str
+
 @app.post("/tryon/{id}")
-async def get_tryon_image(id: str, store: str, user_image_url: str):
+async def get_tryon_image(tryon_request: TryonRequest):
     """Get a virtual try on of a product using an uploaded image."""
+    id = tryon_request.id
+    store = tryon_request.store
+    user_image_url = tryon_request.user
     
     # Get garment and user data
     garment_description, garment_image_url = get_garment_data(id, store)
