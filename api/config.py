@@ -7,9 +7,12 @@ load_dotenv()
 # Secrets
 COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 SHOPIFY_API_KEY = os.getenv("SHOPIFY_API_KEY")
+CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY")
+CLOUDINARY_API_SECRET = os.getenv("CLOUDINARY_API_SECRET")
 
 # Locators
 SHOPIFY_API_URL = "https://%s.myshopify.com/api/2024-07/graphql.json"
+CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME")
 
 # Headers for Shopify API
 REQUEST_HEADERS = {
