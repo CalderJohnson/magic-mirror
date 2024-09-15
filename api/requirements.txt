@@ -4,3 +4,5 @@ cohere
 fastapi
 cloudinary
 pydantic
+uvicorn
+dotenv
