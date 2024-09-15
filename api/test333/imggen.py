@@ -255,19 +255,18 @@ for ex_human in human_list_path:
     ex_dict['composite'] = None
     human_ex_list.append(ex_dict)
 
-class ImageGenerator:
-    """Interface for image generation"""
-    @staticmethod
-    def tryon(human_image_path, garment_image_path, garment_description):
-        """Try on a garment on a human image"""
-        filepath = ".\\temp\\"
-        human_image = Image.open(filepath+human_image_path)
-        garment_image = Image.open(filepath+garment_image_path)
-        people = {'background': human_image}
-        output = start_tryon(people, garment_image, garment_description, True, True, 30, 10)
-        output[0].save(filepath+"save.png")
-        path = os.path.abspath(filepath)
-        print(path)
-        return
+##default human
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('input_person_file', type=str)
+parser.add_argument('input_garment_file', type=str)
+parser.add_argument('description', type=str)
+parser.add_argument('output_img_file', type=str)
+args=parser.parse_args()
+person = Image.open(".\\imgs\\"+args.input_person_file)
+garment = Image.open(".\\imgs\\"+args.input_garment_file)
+people = {'background' : person}
 
-ImageGenerator.tryon("user.jpg", "garment.jpg", "pink bikini")
+output = start_tryon(people, garment, args.description, True, True, 30, 10)
+print(output)
+output[0].save(".\\imgs\\"+args.output_img_file)
