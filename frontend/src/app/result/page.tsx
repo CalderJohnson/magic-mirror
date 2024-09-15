@@ -13,20 +13,23 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const Page = () => {
   // State to store result from localStorage
-  const [result, setResult] = useState({});
+  const [summaryResult, setSummaryResult] = useState({});
+  const [tryonResult, setTryonResult] = useState({});
 
   // Effect to retrieve data from localStorage once the component has mounted
   useEffect(() => {
     // Check if localStorage is available
     if (typeof window !== "undefined") {
-      const storedResult = "{summary_result: " + localStorage.getItem('summary_result') + ", tryon_result: " + localStorage.getItem('tryon_result') + "}";
-      if (storedResult) {
-        setResult(JSON.parse(storedResult));
+      const storedSummaryResult = localStorage.getItem('summary_result')
+      const storedTryonResult = localStorage.getItem('tryon_result')
+      if (storedSummaryResult && storedTryonResult) {
+        setSummaryResult(JSON.parse(storedSummaryResult));
+        setTryonResult(JSON.parse(storedTryonResult));
       }
     }
   }, []);
 
-  console.log('Result:', result);
+  console.log('Result:', summaryResult);
 
   return (
     <div className='w-full bg-wet'>
@@ -34,8 +37,8 @@ const Page = () => {
         <Image src={drip} width={2047} height={600} alt={""} className="absolute z-[-1]" />
         {/* Display result (optional) */}
         <div>
-          {result ? (
-            <pre>{JSON.stringify(result, null, 2)}</pre>
+          {summaryResult ? (
+            <pre>{JSON.stringify(summaryResult, null, 2)}{JSON.stringify(tryonResult, null, 2)}</pre>
           ) : (
             <p>No result found in localStorage</p>
           )}

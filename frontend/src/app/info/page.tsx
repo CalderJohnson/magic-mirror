@@ -65,7 +65,7 @@ export default function MagicMirror() {
         alert('Image and link uploaded successfully!');
         alert(JSON.stringify(summary_result) + " " + JSON.stringify(tryon_result))
         if (typeof window !== "undefined")
-        localStorage.setItem('summary_result', JSON.stringify(summary_result)); // Store the result in local storage
+        localStorage.setItem('summary_result', JSON.stringify(summary_result)); // Store the results in local storage
         localStorage.setItem("tryon_result", JSON.stringify(tryon_result));
         router.push('/result'); // Redirect to the result page
       } else {
